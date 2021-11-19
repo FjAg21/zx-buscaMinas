@@ -17,30 +17,37 @@ html {
   line-height: 1.4;
 }
 
+/*----------------- div contenedor de todos los elementos.*/
 .general{
 
   margin: auto;
   width: 95%;
 }
 
-.datosTablero{
+/*----------------- div donde se piden datos para crear el mapa de minas.*/
+#datosTablero{
 
+ border: solid chartreuse 1px;
 
 }
 
-.tablero{
+/*----------------- div donde se muestran los botones.*/
+#tablero{
 
-  margin-top: 11px;
-  margin-left: 11px;
+  margin-top: 22px;
+  margin-left: 31px;
 }
 
+/*----------------- aplicada a los botones que se crean dinámicamente con javaScript.*/
 .celdas{
 
+  cursor: pointer; /*----------------- cambia el puntero por una manita.*/
   height: 42px;
   width: 42px;
   margin: 1px;
-
 }
+
+
 
 
 
