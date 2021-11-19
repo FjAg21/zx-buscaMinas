@@ -20,21 +20,27 @@ html {
 .general{
 
   margin: auto;
-  width: 75%;
+  width: 95%;
 }
 
 .datosTablero{
 
-  float: left;
+
 }
 
 .tablero{
 
-  float: right;
-
+  margin-top: 11px;
+  margin-left: 11px;
 }
 
+.celdas{
 
+  height: 42px;
+  width: 42px;
+  margin: 1px;
+
+}
 
 
 
