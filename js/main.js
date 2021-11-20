@@ -46,8 +46,7 @@ class Tablero{
 
     return this.casillas;
   }
-
-
+  
 
   getValorCasillas(){// --------------------------- retorna un array con el valor que tiene cada uno de los valores.
 
@@ -78,14 +77,36 @@ class Tablero{
   }// ----------- Fin getCasillasAleatorias(numCasillas,
 
 
+  // --- retorna un array con el valor de las celdas que están alrededor de la selecciona.
+  getCeldasAlRededor(valorCelda, anchuraFila ){
+
+    let doce = (parseInt(valorCelda) - parseInt(anchuraFila));
+    let una = (parseInt(valorCelda) - parseInt(anchuraFila) + parseInt(1));
+    let tres = (parseInt(valorCelda) + parseInt(1));
+    let cinco = (parseInt(valorCelda) + parseInt(anchuraFila) + parseInt(1));
+
+    let seis = (parseInt(valorCelda) + parseInt(anchuraFila));
+    let siete = (parseInt(valorCelda) + parseInt(anchuraFila) - parseInt(1));
+    let nueve = (parseInt(valorCelda) + parseInt(-1));
+    let once = (parseInt(valorCelda) - parseInt(anchuraFila) - parseInt(1));
+
+    let celdasAlRededor = [doce, una, tres, cinco, seis, siete, nueve, once ];
+
+    return celdasAlRededor;
+  }
+
+
   // ---- crea un tablero en función de los parámetros que pase el usuario.
   crearTablero(tablero, altura, anchura){
 
     let cont = 0; // --- cuenta el nº de casillas que se van creando.
+    let cuentaCedasDesdeUno = 0;
+
     let contNumAleatorio = 0; // --- cuenta el total de nº de aleatorios.
     let posicionBombas = this.getCasillasAleatorias(this.totalCeldas, this.bombas);
 
-    console.log("--------------------------------------- " +posicionBombas);
+
+    console.log("Situación de las bommbas: ----------- " +posicionBombas);//---------------------------------**********
 
     for (let i = 0; i < anchura; i++) {
 
@@ -98,6 +119,7 @@ class Tablero{
         button.className = 'celdas';
         button.type = 'button';
 
+        // --- 'posicionBombas[cont]' = celdas aleatoras. 'contNumAleatorio' = cada una de las celdas numeradas.
         if (posicionBombas[cont] === contNumAleatorio){
 
           button.innerHTML = "BB";
@@ -111,7 +133,8 @@ class Tablero{
         }
         else {
           button.innerText = this.letras[i]+"" +j;
-          button.value  = this.letras[i]+"" +j;
+
+          button.value  = cuentaCedasDesdeUno;
           div.appendChild(button);
           button.className = 'celdas';
 
@@ -119,6 +142,7 @@ class Tablero{
         }
 
         contNumAleatorio++;
+        cuentaCedasDesdeUno++;
       }
     }
 
@@ -126,8 +150,6 @@ class Tablero{
 
 
 } // ----------- Fin class Tablero{
-
-
 
 
 //********************************************************************************************************************
@@ -155,11 +177,9 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
   let casillas = table.getNobreCasillas();
 
 
-  console.log('table.getValorCasillas: ' +table.getValorCasillas());//---------------------------------------------------------------
+  //console.log('table.getValorCasillas: ' +table.getValorCasillas());//*******************--------------------------------------**********************----------
 
-  console.log('Posición de la bombas: '+bombasAleatoria);//----------------------------------------------
-
-  console.log('getNobreCasillas(): ' +table.getNobreCasillas());//----------------------------------------------
+  //console.log('getNobreCasillas(): ' +table.getNobreCasillas());//----------------------------------------------
 
   const celdas = document.querySelectorAll('.celdas');
 
@@ -171,14 +191,26 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
     celda.addEventListener( 'mouseup', (e) => {
 
 
-      console.log(celda.value);
+      console.log("celda.value ++++++++++++" +celda.value);//*******************--------------------------------------**********************
+      console.log('table.getValorCasillas: ' +table.getValorCasillas());////*******************---------------
       if (celda.value === 'BB'){
         celda.style.backgroundColor = 'red';
-        celdas[5].style.backgroundColor = 'yellow';
+        celda.innerHTML = '<span style=\'font-size:16px;\'>&#x1F4A5;</</span>';
+        celdas[5].style.backgroundColor = '#E7EB4E';
 
+        //console.log('celdas[5] ' +celdas[5].value);//--------------------------------------------********************
+        //console.log('celdas[7] ' +celdas[7].value);//--------------------------------------------********************
+        console.log('celdas.length) ' +celdas.length);//--------------------------------------------********************
       }
       else{
-        celda.style.backgroundColor = 'green';
+
+        let celdasAlRededor = table.getCeldasAlRededor(celda.value, anchura );
+
+        console.log('celdasAlRededor ------ celdasAlRededor ' +celdasAlRededor);//--------------------------------------------********************
+
+        celda.style.backgroundColor = '#ffffff';
+        celda.innerHTML = '<span style=\'font-size:16px;\'>&#x26F5;</</span>';
+        console.log('anchura ------ anchura ' +anchura);//--------------------------------------------********************
       }
       //celda.style.backgroundColor= 'yellow';
     });
