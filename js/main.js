@@ -63,7 +63,7 @@ class Tablero{
     for (let i = 0; i < numCasillas; i++) {
       bombasAleatorias[i] = i ;
     }
-    
+
     // -- desordeno el orden creado de las casillas del tablero.
     bombasAleatorias.sort(() => Math.random() - 0.5);
 
@@ -102,6 +102,7 @@ class Tablero{
 
           button.innerHTML = "BB";
           button.value  = "BB";
+          button.className = 'celdas';
 
           div.appendChild(button);
           this.casillas[contNumAleatorio] = "BB";// --- cargo el array con los valores asignado a cada botón.
@@ -110,8 +111,9 @@ class Tablero{
         }
         else {
           button.innerText = this.letras[i]+"" +j;
-          button.value  = "BB";
+          button.value  = this.letras[i]+"" +j;
           div.appendChild(button);
+          button.className = 'celdas';
 
           this.casillas[contNumAleatorio] = this.letras[i]+"" +j;// --- cargo el array con los valores asignado a cada botón.
         }
@@ -131,6 +133,8 @@ class Tablero{
 //********************************************************************************************************************
 
 
+// ===================================================================== CREO  EL OBJETO  TABLERO  CON UN EVENTO-
+
 document.getElementById('crearTablero').addEventListener( 'click', (e) => {
 
   let altura = document.getElementById('altura').value;
@@ -141,8 +145,6 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
   let datosTablero = document.getElementById('datosTablero');
   datosTablero.style.display = 'none';// --- oculto el div pedir datos.
 
-
-  // =================================================== CREO  EL OBJETO  TABLERO-
   let table = new Tablero(altura, anchura, numBombas);
   let totalCeldas = table.getTotalCeldas();
   let totalBombas = table.getBombas();
@@ -150,6 +152,7 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
 
   table.crearTablero(tablero, altura, anchura);
   let bombasAleatoria = table.getCasillasAleatorias(totalCeldas, totalBombas);
+  let casillas = table.getNobreCasillas();
 
 
   console.log('table.getValorCasillas: ' +table.getValorCasillas());//---------------------------------------------------------------
@@ -158,6 +161,34 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
 
   console.log('getNobreCasillas(): ' +table.getNobreCasillas());//----------------------------------------------
 
+  const celdas = document.querySelectorAll('.celdas');
+
+
+
+  celdas.forEach(  celda => {
+
+    // ===================================================================== CREO  EL EVENTO  PARA  EL  RATÓN-
+    celda.addEventListener( 'mouseup', (e) => {
+
+
+      console.log(celda.value);
+      if (celda.value === 'BB'){
+        celda.style.backgroundColor = 'red';
+        celdas[5].style.backgroundColor = 'yellow';
+
+      }
+      else{
+        celda.style.backgroundColor = 'green';
+      }
+      //celda.style.backgroundColor= 'yellow';
+    });
+
+  });
 
 
 });// ----------- Fin document.getElementById('crearTablero').addEventListener
+
+
+
+
+
