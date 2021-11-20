@@ -19,8 +19,6 @@ class Tablero{
     this.bombas = bombas;
     this.totalCeldas = this.altura * this.bombas;
 
-    this.casillasAleatorias = this.getCasillasAleatorias(this.totalCeldas, this.bombas);
-
   }
 
   getAltura(){
@@ -48,9 +46,21 @@ class Tablero{
   crearTablero(tablero, altura, anchura){
 
     let cont = 0; // --- cuenta el nº de casillas que se van creando.
-    let contNumAleatorio = 0; // --- controla el nº de aleatorios.
+    let contNumAleatorio = 0; // --- cuenta el total de nº de aleatorios.
 
-    for (let i = 1; i <= anchura; i++) {
+
+    let posicionBombas = this.getCasillasAleatorias(this.totalCeldas, this.bombas);
+
+
+    console.log('this.totalCeldas-- 00  ' +this.totalCeldas);//--------------------------------------------
+    console.log('this.bombas-- 00 ' +this.bombas);//--------------------------------------------
+    console.log('posicionBombas -Array -- 00 ' +posicionBombas) ;//--------------------------------------------
+    console.log('--------------------------------------------<br><br> <br>  '  ) ;
+
+
+    //let posicionBombas = this.getCasillasAleatorias(this.totalCeldas, this.bombas);
+
+    for (let i = 0; i <= anchura; i++) {
 
       const div = document.createElement('div');// --- para cada valor de 'i' creo un div.
       tablero.appendChild(div);
@@ -61,25 +71,40 @@ class Tablero{
         button.className = 'celdas';
         button.type = 'button';
 
+        console.log('posicionBombas[cont]-- 11  ' +posicionBombas[cont]);//--------------------------------------------
+        console.log('contNumAleatorio-------------------------------- 11 ' +contNumAleatorio);//--------------------------------------------
 
-        if (this.casillasAleatorias[contNumAleatorio] == cont ){
-          button.value = "BB";
-          contNumAleatorio++;
-        }else{
-          button.value = this.letras[i]+"" +j;
+
+        if (posicionBombas[cont] === contNumAleatorio){
+
+          console.log('posicionBombas[cont]-- 22  ' +posicionBombas[cont]);//--------------------------------------------
+          console.log('contNumAleatorio------------------------------- 22 ' +contNumAleatorio);//--------------------------------------------
+
+
+          button.innerHTML = "BB";
+          button.value  = "BB";
+
+          div.appendChild(button);
+          this.casillas[cont] = this.letras[i]+"" +j;// --- cargo el array con los valores asignado a cada botón.
+          cont++;
+
+        }
+        else {
+          button.innerText = this.letras[i]+"" +j;
+          button.value  = "BB";
+          div.appendChild(button);
+
+          this.casillas[cont] = this.letras[i]+"" +j;// --- cargo el array con los valores asignado a cada botón.
+
         }
 
-
-        //button.value = this.letras[i]+"" +j;
-
-        button.innerText = this.letras[i]+"" +j;
-        div.appendChild(button);
-
-        this.casillas[cont] = this.letras[i]+"" +j;// --- cargo el array con los valores asignado a cada botón.
-        cont++;
         contNumAleatorio++;
+        console.log('contNumAleatorio contNumAleatorio ;  ' +contNumAleatorio );
       }
     }
+
+    console.log('num ale contNumAleatorio;  ' +contNumAleatorio );
+
   }// ----------- Fin crearTablero(.....)
 
 
@@ -95,21 +120,21 @@ class Tablero{
   getCasillasAleatorias(numCasillas, numBombas){
 
     for (let i = 0; i <numBombas; i++) {
-      let aleatorio = Math.round(Math.random()*numCasillas);
-      this.casillasAleatorias[i] = aleatorio;
+      let aleator = Math.round(Math.random()*numCasillas);
+      this.casillasAleatorias[i] = aleator;
 
     }// ----------- Fin getCasillasAleatorias(numCasillas,
 
-    return this.casillasAleatorias;
+
+    return this.casillasAleatorias.sort( (a,b) => a - b);
   }
 
 } // ----------- Fin class Tablero{
 
 
 
-let crearTablero = document.getElementById('crearTablero');
 
-
+//********************************************************************************************************************
 
 
 document.getElementById('crearTablero').addEventListener( 'click', (e) => {
@@ -118,21 +143,24 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
   let anchura = document.getElementById('anchura').value;
   let numBombas = document.getElementById('numMinas').value;
 
-
-
   let tablero = document.getElementById('tablero');
   let datosTablero = document.getElementById('datosTablero');
-
   datosTablero.style.display = 'none';// --- oculto el div pedir datos.
 
+
+  // =================================================== CREO  EL OBJETO  TABLERO-
   let table = new Tablero(altura, anchura, numBombas);
+  let totalCeldas = table.getTotalCeldas();
+  let totalBombas = table.getBombas();
+
 
   table.crearTablero(tablero, altura, anchura);
-  let bombasAleatoria = table.getCasillasAleatorias(table.getTotalCeldas(), table.getBombas());
+  let bombasAleatoria = table.getCasillasAleatorias(totalCeldas, totalBombas);
 
 
-  console.log(table.getValorCasillas());
-  console.log(bombasAleatoria);
+  console.log(table.getValorCasillas());//---------------------------------------------------------------
+
+  console.log('Posición de la bombas: '+bombasAleatoria);//----------------------------------------------
 
 
 
