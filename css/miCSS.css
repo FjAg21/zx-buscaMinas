@@ -1,3 +1,14 @@
+*{
+
+  padding: 0px;
+  margin: 0;
+  text-decoration: none;
+  font-family: "Calibri Light";
+}
+
+
+
+
 /*----------------- div contenedor de todos los elementos.*/
 .general{
 
@@ -17,14 +28,21 @@
 
   margin-top: 22px;
   margin-left: 31px;
+
+  overflow-x: hidden;
+
+  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 /*----------------- aplicada a los botones que se crean dinámicamente con javaScript.*/
 .celdas{
 
   cursor: pointer; /*----------------- cambia el puntero por una manita.*/
-  height: 42px;
-  width: 42px;
-  margin: 1px;
+  height: 47px;
+  width: 47px;
+  margin: 2px;
+  box-shadow: 0px 0px 15px gray;
+  font-size: 27px;
 }
 

@@ -89,7 +89,7 @@ class Tablero{
     return this.casillasAleatorias.sort( (a,b) => a - b);
 
   }// ----------- Fin getCasillasAleatorias(numCasillas,
-  
+
 
   // --- retorna un array con el valor de las celdas que están alrededor de la selecciona.
   getCeldasAlRededor(valorCelda, anchuraFila ){
@@ -248,15 +248,6 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
   let numeroDeCadaCelda = table.getCeldasNumeradas();
 
 
-  //let totalCeldas = table.getTotalCeldas();
-  //let totalBombas = table.getBombas();
-
-  //let bombasAleatoria = table.getCasillasAleatorias(totalCeldas, totalBombas);
-  //let casillas = table.getNobreCasillas();
-
-
-  //console.log('table.getValorCasillas: ' +table.getValorCasillas());//*******************--------------------------------------**********************----------
-
   console.log('Nombre de cada celda: ' +nombreDeCadaCelda);//----------------------------------------------
   console.log("Número de cada celda: " +numeroDeCadaCelda)//--------------------------**********
 
@@ -269,14 +260,8 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
       let celdasAlRededorDeLaSeleccionada =
                     table.getCeldasAlRededor(parseInt(valorDeLaCeldaSelecciona), parseInt(anchura) );
 
-      //console.log("Valor de la celda seleccionada: ++++++++++++" +valorDeLaCeldaSelecciona);//*******************--------------------------------------**********************
-      console.log("Situación de las bommbas: ----------- " +table.posicionBombas);//---------------------------------******
-      console.log('celda.value  celda.value  ' +celda.value);//-------
 
       if (valorDeLaCeldaSelecciona !== 'BB') {
-        console.log("Valor de la celda seleccionada: ++++++++++++ " +valorDeLaCeldaSelecciona);//*******
-        console.log('Celdas A lRededor De La Celda Seleccionada ' +celdasAlRededorDeLaSeleccionada);//-------------------
-        let contadorBombasCercanas = 0;
 
         for (let i = 0; i < table.posicionBombas.length; i++) {
 
@@ -287,7 +272,6 @@ document.getElementById('crearTablero').addEventListener( 'click', (e) => {
               contadorBombasCercanas++;
             }
 
-            console.log('parseInt(table.getTotalCeldas()+1) ' +parseInt(table.getTotalCeldas()));
             if (celdasAlRededorDeLaSeleccionada[j] >= 0 &&
                         celdasAlRededorDeLaSeleccionada[j] < parseInt(table.getTotalCeldas())){
 
@@ -360,30 +344,52 @@ document.getElementById('crearTableroSinMapa').addEventListener( 'click', (e) =>
               celdasAlRededorDeLaSeleccionada[j] < parseInt(table.getTotalCeldas())){
 
               celdas[celdasAlRededorDeLaSeleccionada[j]].style.backgroundColor = '#E7EB4E';
-              //celdas[celdasAlRededorDeLaSeleccionada[j]].innerHTML = '&#127937;';
+
             }
           }
         }
 
         celdas[valorDeLaCeldaSelecciona].innerHTML =
-          '<span style=\'font-size:12px;\'>' + contadorBombasCercanas + '</span>';
+          '<span style=\'font-size:18px;\'>' + contadorBombasCercanas + '</span>';
 
         celdas[valorDeLaCeldaSelecciona].style.backgroundColor = '#4eebd9';
 
       }
       else {
 
-        celdas.forEach( cel => {
+       /* celdas.forEach( cel => {
             cel.innerHTML = '&#128163;';
             cel.style.backgroundColor = '#f83f15';
+        });          */
 
+        celdas.forEach( cel => {
+
+          if (cel.value === "BB"){
+
+            for (let j = 0; j < table.posicionBombas.length; j++) {
+
+              setTimeout(function () {
+
+                console.log(table.posicionBombas[j]);
+                $esta = table.posicionBombas[j]
+
+                // let posi = table.posicionBombas[i];
+                celdas[$esta ].innerHTML = '&#128163;';
+                celdas[$esta ].style.backgroundColor = '#f83f15';
+              }, 400 * j);
+
+            }
+
+          }
+          console.log('parseInt(table.getTotalCeldas()+1) ' +parseInt(table.getTotalCeldas()));
         });
+
       }
     });
 
   });
 
-});// ----------- Fin document.getElementById('crearTablero').addEventListener
+});// ----------- Fin document.getElementById('crearTableroSinMapa').addEventListener
 
 
 //https://www.youtube.com/watch?v=xwapo6FFhnQ
